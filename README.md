@@ -1,2 +1,2 @@
 # Project-Transverse
-Un projet de jeu oygame
+Un projet de jeu pygame
