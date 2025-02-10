@@ -1,2 +1,3 @@
 # Project-Transverse
-Un projet de jeu pygame : Bomberman
+Un projet de jeu pygame : Bomberman - Multijoueur 
+
