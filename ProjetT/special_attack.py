@@ -48,7 +48,7 @@ class SpecialAttackSystem:
         # Load images
         arrow = pygame.image.load("arrow.png").convert_alpha()
         self.arrow_img = pygame.transform.scale(arrow, (30, 30))
-        bomb = pygame.image.load("specialbomb.png").convert_alpha()
+        bomb = pygame.image.load("bomb/specialbomb.png").convert_alpha()
         self.bomb_img = pygame.transform.scale(bomb, (40, 40))
 
     def handle_event(self, ev, p1_has_special, p2_has_special, p1_x, p1_y, p2_x, p2_y):

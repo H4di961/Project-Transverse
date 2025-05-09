@@ -1,13 +1,24 @@
-from pygame import *
-from math import *
-from random import *
-from pygame import mixer
-import pygame
+import os
+import random
 def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, tile_size):
     """Starts the Bomberman game."""
     init()
     fenetre = surface  # Use the surface passed from the menu
 
+    def charger_map_aleatoire(dossier="maps"):
+        """Sélectionne et charge une map aléatoire depuis un dossier."""
+        fichiers_maps = [f for f in os.listdir(dossier) if f.endswith(".txt")]
+        if not fichiers_maps:
+            raise Exception("Aucune map disponible dans le dossier.")
+
+        fichier_choisi = random.choice(fichiers_maps)
+        chemin_map = os.path.join(dossier, fichier_choisi)
+
+        with open(chemin_map, "r") as f:
+            lignes = f.readlines()
+
+        map_data = [list(l.strip("\n")) for l in lignes]
+        return map_data
 
     fenetre = display.set_mode((600, 600), RESIZABLE)
 
@@ -25,7 +36,7 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
     explosion_bombe = mixer.Sound("mixkit-8-bit-bomb-explosion-2811.wav")
     explosion_bombe.set_volume(0.2)
 
-    fond = image.load("background/bomberman_background.png").convert()
+    fond = image.load("maps/bomberman_background.png").convert()
     boots = image.load("boots/boots.png").convert_alpha()  # 5 dans la matrice
     for x in range(boots.get_size()[0]):
         for y in range(boots.get_size()[1]):
