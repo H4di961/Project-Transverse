@@ -25,71 +25,71 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
     explosion_bombe = mixer.Sound("mixkit-8-bit-bomb-explosion-2811.wav")
     explosion_bombe.set_volume(0.2)
 
-    fond = image.load("bomberman_background.png").convert()
-    boots = image.load("boots.png").convert_alpha()  # 5 dans la matrice
+    fond = image.load("background/bomberman_background.png").convert()
+    boots = image.load("boots/boots.png").convert_alpha()  # 5 dans la matrice
     for x in range(boots.get_size()[0]):
         for y in range(boots.get_size()[1]):
             (r, v, b, t) = boots.get_at((x, y))
             if r + b + v > 700:
                 boots.set_at((x, y), (r, v, b, 0))
-    a1 = image.load("images/a1.png").convert_alpha()  # 5 dans la matrice
+    a1 = image.load("a/a1.png").convert_alpha()  # 5 dans la matrice
     for x in range(a1.get_size()[0]):
         for y in range(a1.get_size()[1]):
             (r, v, b, t) = a1.get_at((x, y))
             if r + b + v > 700:
                 a1.set_at((x, y), (r, v, b, 0))
-    a2 = image.load("images/a2.png").convert_alpha()  # 5 dans la matrice
+    a2 = image.load("a/a2.png").convert_alpha()  # 5 dans la matrice
     for x in range(a2.get_size()[0]):
         for y in range(a2.get_size()[1]):
             (r, v, b, t) = a2.get_at((x, y))
             if r + b + v > 700:
                 a2.set_at((x, y), (r, v, b, 0))
-    a3 = image.load("images/a3.png").convert_alpha()  # 5 dans la matrice
+    a3 = image.load("a/a3.png").convert_alpha()  # 5 dans la matrice
     for x in range(a3.get_size()[0]):
         for y in range(a3.get_size()[1]):
             (r, v, b, t) = a3.get_at((x, y))
             if r + b + v > 700:
                 a3.set_at((x, y), (r, v, b, 0))
-    a4 = image.load("images/a4.png").convert_alpha()  # 5 dans la matrice
+    a4 = image.load("a/a4.png").convert_alpha()  # 5 dans la matrice
     for x in range(a4.get_size()[0]):
         for y in range(a4.get_size()[1]):
             (r, v, b, t) = a4.get_at((x, y))
             if r + b + v > 700:
                 a4.set_at((x, y), (r, v, b, 0))
-    a5 = image.load("images/a5.png").convert_alpha()  # 5 dans la matrice
+    a5 = image.load("a/a5.png").convert_alpha()  # 5 dans la matrice
     for x in range(a5.get_size()[0]):
         for y in range(a5.get_size()[1]):
             (r, v, b, t) = a5.get_at((x, y))
             if r + b + v > 700:
                 a5.set_at((x, y), (r, v, b, 0))
-    perso1 = image.load("images/perso1.png").convert_alpha()
+    perso1 = image.load("persos/perso1.png").convert_alpha()
     for x in range(perso1.get_size()[0]):
         for y in range(perso1.get_size()[1]):
             (r, v, b, t) = perso1.get_at((x, y))
             if r + b + v > 700:
                 perso1.set_at((x, y), (r, v, b, 0))
-    perso2 = image.load("images/perso2.png").convert_alpha()
+    perso2 = image.load("persos/perso2.png").convert_alpha()
     for x in range(perso2.get_size()[0]):
         for y in range(perso2.get_size()[1]):
             (r, v, b, t) = perso2.get_at((x, y))
             if r + b + v > 700:
                 perso2.set_at((x, y), (r, v, b, 0))
-    block = image.load("images/block.png").convert()  # 2 dans la matrice
-    bombe = image.load("images/bombe.png").convert_alpha()  # 3 dans la matrice
+    block = image.load("block/block.png").convert()  # 2 dans la matrice
+    bombe = image.load("bomb/bombe.png").convert_alpha()  # 3 dans la matrice
     for x in range(bombe.get_size()[0]):
         for y in range(bombe.get_size()[1]):
             (r, v, b, t) = bombe.get_at((x, y))
             if r + b + v > 700:
                 bombe.set_at((x, y), (r, v, b, 0))
-    flamme = image.load("images/flame1.png").convert_alpha()
+    flamme = image.load("flame/flame1.png").convert_alpha()
     for x in range(flamme.get_size()[0]):
         for y in range(flamme.get_size()[1]):
             (r, v, b, t) = flamme.get_at((x, y))
             if r + b + v > 760:
                 flamme.set_at((x, y), (r, v, b, 0))  # 4 dans la matrice
     liste_im = [block, bombe, flamme, boots]
-    fin1 = image.load("images/ecrandefin.png").convert()
-    fin2 = image.load("images/ecrandefin1.png").convert()
+    fin1 = image.load("end screen/ecrandefin.png").convert()
+    fin2 = image.load("end screen/ecrandefin1.png").convert()
     lafin = [fin2, fin1]
 
     # matrice
