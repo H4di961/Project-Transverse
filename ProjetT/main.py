@@ -32,64 +32,64 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
             (r, v, b, t) = boots.get_at((x, y))
             if r + b + v > 700:
                 boots.set_at((x, y), (r, v, b, 0))
-    a1 = image.load("a1.png").convert_alpha()  # 5 dans la matrice
+    a1 = image.load("images/a1.png").convert_alpha()  # 5 dans la matrice
     for x in range(a1.get_size()[0]):
         for y in range(a1.get_size()[1]):
             (r, v, b, t) = a1.get_at((x, y))
             if r + b + v > 700:
                 a1.set_at((x, y), (r, v, b, 0))
-    a2 = image.load("a2.png").convert_alpha()  # 5 dans la matrice
+    a2 = image.load("images/a2.png").convert_alpha()  # 5 dans la matrice
     for x in range(a2.get_size()[0]):
         for y in range(a2.get_size()[1]):
             (r, v, b, t) = a2.get_at((x, y))
             if r + b + v > 700:
                 a2.set_at((x, y), (r, v, b, 0))
-    a3 = image.load("a3.png").convert_alpha()  # 5 dans la matrice
+    a3 = image.load("images/a3.png").convert_alpha()  # 5 dans la matrice
     for x in range(a3.get_size()[0]):
         for y in range(a3.get_size()[1]):
             (r, v, b, t) = a3.get_at((x, y))
             if r + b + v > 700:
                 a3.set_at((x, y), (r, v, b, 0))
-    a4 = image.load("a4.png").convert_alpha()  # 5 dans la matrice
+    a4 = image.load("images/a4.png").convert_alpha()  # 5 dans la matrice
     for x in range(a4.get_size()[0]):
         for y in range(a4.get_size()[1]):
             (r, v, b, t) = a4.get_at((x, y))
             if r + b + v > 700:
                 a4.set_at((x, y), (r, v, b, 0))
-    a5 = image.load("a5.png").convert_alpha()  # 5 dans la matrice
+    a5 = image.load("images/a5.png").convert_alpha()  # 5 dans la matrice
     for x in range(a5.get_size()[0]):
         for y in range(a5.get_size()[1]):
             (r, v, b, t) = a5.get_at((x, y))
             if r + b + v > 700:
                 a5.set_at((x, y), (r, v, b, 0))
-    perso1 = image.load("perso1.png").convert_alpha()
+    perso1 = image.load("images/perso1.png").convert_alpha()
     for x in range(perso1.get_size()[0]):
         for y in range(perso1.get_size()[1]):
             (r, v, b, t) = perso1.get_at((x, y))
             if r + b + v > 700:
                 perso1.set_at((x, y), (r, v, b, 0))
-    perso2 = image.load("perso2.png").convert_alpha()
+    perso2 = image.load("images/perso2.png").convert_alpha()
     for x in range(perso2.get_size()[0]):
         for y in range(perso2.get_size()[1]):
             (r, v, b, t) = perso2.get_at((x, y))
             if r + b + v > 700:
                 perso2.set_at((x, y), (r, v, b, 0))
-    block = image.load("block.png").convert()  # 2 dans la matrice
-    bombe = image.load("bombe.png").convert_alpha()  # 3 dans la matrice
+    block = image.load("images/block.png").convert()  # 2 dans la matrice
+    bombe = image.load("images/bombe.png").convert_alpha()  # 3 dans la matrice
     for x in range(bombe.get_size()[0]):
         for y in range(bombe.get_size()[1]):
             (r, v, b, t) = bombe.get_at((x, y))
             if r + b + v > 700:
                 bombe.set_at((x, y), (r, v, b, 0))
-    flamme = image.load("flame1.png").convert_alpha()
+    flamme = image.load("images/flame1.png").convert_alpha()
     for x in range(flamme.get_size()[0]):
         for y in range(flamme.get_size()[1]):
             (r, v, b, t) = flamme.get_at((x, y))
             if r + b + v > 760:
                 flamme.set_at((x, y), (r, v, b, 0))  # 4 dans la matrice
     liste_im = [block, bombe, flamme, boots]
-    fin1 = image.load("ecrandefin.png").convert()
-    fin2 = image.load("ecrandefin1.png").convert()
+    fin1 = image.load("images/ecrandefin.png").convert()
+    fin2 = image.load("images/ecrandefin1.png").convert()
     lafin = [fin2, fin1]
 
     # matrice
@@ -141,6 +141,10 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
     player2_has_special = False
     special_attack = SpecialAttackSystem()
 
+    victoires_p1 = 0
+    victoires_p2 = 0
+    manche_terminee = False
+
     while True:
         # 1) Cap to 230 FPS
         time.Clock().tick(230)
@@ -188,6 +192,10 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
         text2 = font.render(f'Bricks P2: {player2_bricks}/5', True, (255, 255, 255))
         text_special1 = font.render('SPECIAL!' if player1_has_special else '', True, (255, 215, 0))
         text_special2 = font.render('SPECIAL!' if player2_has_special else '', True, (255, 215, 0))
+
+        # Show the score
+        score_text = font.render(f'Score - P1: {victoires_p1} | P2: {victoires_p2}', True, (255, 255, 255))
+        fenetre.blit(score_text, (200, 70))
 
         # Blit the counters and indicators onto the screen
         fenetre.blit(text1, (20, 10))  # Position for Player 1's brick counter
@@ -488,6 +496,42 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
 
                     break
         display.flip()
+
+    # Détection de fin de manche
+    if vie1 <= 0 and not manche_terminee:
+        victoires_p2 += 1
+        manche_terminee = True
+        pygame.time.wait(2000)
+    elif vie2 <= 0 and not manche_terminee:
+        victoires_p1 += 1
+        manche_terminee = True
+        pygame.time.wait(2000)
+
+    # Affichage du score
+    score_text = font.render(f"Score - P1: {victoires_p1} | P2: {victoires_p2}", True, (255, 255, 255))
+    fenetre.blit(score_text, (200, 70))
+
+    # Vérifie si un joueur a gagné 3 manches
+    if victoires_p1 == 3:
+        fin_text = font.render("JOUEUR 1 GAGNE LA PARTIE !", True, (0, 255, 0))
+        fenetre.blit(fin_text, (120, 300))
+        display.flip()
+        pygame.time.wait(5000)
+        pygame.quit()
+        return
+
+    if victoires_p2 == 3:
+        fin_text = font.render("JOUEUR 2 GAGNE LA PARTIE !", True, (0, 255, 0))
+        fenetre.blit(fin_text, (120, 300))
+        display.flip()
+        pygame.time.wait(5000)
+        pygame.quit()
+        return
+
+    # Réinitialisation de la manche
+    if manche_terminee:
+        start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, tile_size)
+        return
 
     pygame.quit()
 
