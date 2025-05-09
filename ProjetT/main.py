@@ -156,9 +156,16 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
     victoires_p2 = 0
     manche_terminee = False
 
+    font = pygame.font.SysFont(None, 48)  # Police par défaut, taille 48
+
     while True:
         # 1) Cap to 230 FPS
         time.Clock().tick(230)
+
+        # Affichage du score
+        texte_score1 = font.render(f"Score joueur 1: {victoires_p1}", True, (255, 255, 255))  # Blanc
+        texte_score2 = font.render(f"Score joueur 2: {victoires_p2}", True, (255, 255, 255))  # Blanc
+        ecran.blit(texte_score, (10, 10))
 
         # 2) Handle quit & special‐attack key events
         for ev in pygame.event.get():
@@ -506,45 +513,25 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
                                         matrice[l][c] = 2
 
                     break
-        display.flip()
+        pygame.display.flip()
 
-    # Détection de fin de manche
-    if vie1 <= 0 and not manche_terminee:
-        victoires_p2 += 1
-        manche_terminee = True
-        pygame.time.wait(2000)
-    elif vie2 <= 0 and not manche_terminee:
-        victoires_p1 += 1
-        manche_terminee = True
-        pygame.time.wait(2000)
-
-    # Affichage du score
-    score_text = font.render(f"Score - P1: {victoires_p1} | P2: {victoires_p2}", True, (255, 255, 255))
-    fenetre.blit(score_text, (200, 70))
-
-    # Vérifie si un joueur a gagné 3 manches
-    if victoires_p1 == 3:
-        fin_text = font.render("JOUEUR 1 GAGNE LA PARTIE !", True, (0, 255, 0))
-        fenetre.blit(fin_text, (120, 300))
-        display.flip()
-        pygame.time.wait(5000)
-        pygame.quit()
-        return
-
-    if victoires_p2 == 3:
-        fin_text = font.render("JOUEUR 2 GAGNE LA PARTIE !", True, (0, 255, 0))
-        fenetre.blit(fin_text, (120, 300))
-        display.flip()
-        pygame.time.wait(5000)
-        pygame.quit()
-        return
 
     # Réinitialisation de la manche
     if manche_terminee:
         start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, tile_size)
         return
 
+    # Vérifie si un joueur a gagné 3 manches
+    if victoires_p1 >= 3:
+        winner_text = font.render("Player 1 wins the game!", True, (0, 255, 0))
+    else:
+        winner_text = font.render("Player 2 wins the game!", True, (0, 255, 0))
+
+    fenetre.blit(winner_text, (200, 300))
+    display.flip()
+    time.wait(5000)
     pygame.quit()
+
 
 if __name__ == "__main__":
     pass
