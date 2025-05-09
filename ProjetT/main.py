@@ -3,8 +3,10 @@ import random
 def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, tile_size):
     """Starts the Bomberman game."""
     init()
-    fenetre = surface  # Use the surface passed from the menu
+    # Use the surface passed from the menu:
+    fenetre = surface
 
+    #chose a random map:
     def charger_map_aleatoire(dossier="maps"):
         """Sélectionne et charge une map aléatoire depuis un dossier."""
         fichiers_maps = [f for f in os.listdir(dossier) if f.endswith(".txt")]
@@ -36,6 +38,7 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
     explosion_bombe = mixer.Sound("mixkit-8-bit-bomb-explosion-2811.wav")
     explosion_bombe.set_volume(0.2)
 
+    #insertion of the images:
     fond = image.load("maps/bomberman_background.png").convert()
     boots = image.load("boots/boots.png").convert_alpha()  # 5 dans la matrice
     for x in range(boots.get_size()[0]):
@@ -120,7 +123,7 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
                [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
 
-    # apparition au hasard des blocs:
+    # random spawn of blocks:
     for l in range(len(matrice)):
         for c in range(len(matrice[0])):
             if l + c >= 4 and l + c <= 24:
@@ -144,6 +147,7 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
     vitesse1 = 1
     vitesse2 = 1
 
+    #special attacks:
     from special_attack import SpecialAttackSystem  # if not already imported
 
     player1_bricks = 0
@@ -162,34 +166,29 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
         # 1) Cap to 230 FPS
         time.Clock().tick(230)
 
-        # Affichage du score
-        texte_score1 = font.render(f"Score joueur 1: {victoires_p1}", True, (255, 255, 255))  # Blanc
-        texte_score2 = font.render(f"Score joueur 2: {victoires_p2}", True, (255, 255, 255))  # Blanc
-        ecran.blit(texte_score, (10, 10))
-
-        # 2) Handle quit & special‐attack key events
+        # Handle quit & special‐attack key events:
         for ev in pygame.event.get():
             if ev.type == QUIT:
                 pygame.quit()
-                return  # or quit()
+                return
 
-            # feed key‐downs into the SpecialAttackSystem
+            # feed key‐downs into the SpecialAttackSystem:
             special_used = special_attack.handle_event(
                 ev,
                 player1_has_special, player2_has_special,
                 xp, yp, xp2, yp2
             )
             if special_used:
-                # consume the special for whomever fired
+                # consume the special for whomever fired:
                 if special_attack.charging_player == 1:
                     player1_has_special = False
                 else:
                     player2_has_special = False
 
-        # 3) While charging, let the player re‐aim the arrow
+        # While charging, let the player re‐aim the arrow:
         special_attack.update_charging(pygame.key.get_pressed())
 
-        # 4) Draw the world
+        # Draw the world:
         fenetre.blit(fond, (0, 0))
         fenetre.blit(perso1, (xp, yp))
         fenetre.blit(perso2, (xp2, yp2))
@@ -204,14 +203,13 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
                     )
 
 
-        # 🧠 ADD THESE:
         # Replace your current text rendering code with:
         text1 = font.render(f'Bricks P1: {player1_bricks}/5', True, (255, 255, 255))
         text2 = font.render(f'Bricks P2: {player2_bricks}/5', True, (255, 255, 255))
         text_special1 = font.render('SPECIAL!' if player1_has_special else '', True, (255, 215, 0))
         text_special2 = font.render('SPECIAL!' if player2_has_special else '', True, (255, 215, 0))
 
-        # Show the score
+        # Show the score:
         score_text = font.render(f'Score - P1: {victoires_p1} | P2: {victoires_p2}', True, (255, 255, 255))
         fenetre.blit(score_text, (200, 70))
 
@@ -222,16 +220,16 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
         fenetre.blit(text_special2, (450, 40))  # Position for Player 2's special attack indicator
 
 
-        # Draw special attack visuals
+        # Draw special attack visuals:
         special_attack.draw(fenetre, xp, yp, xp2, yp2)
 
         display.flip()
 
 
-        # attaque:
-
+        # attacks:
         keyb = key.get_pressed()
-        # Player 2 bomb placement
+
+        # Player 2 bomb placement:
         if keyb[K_e] and not (special_attack.charging or special_attack.is_active):
             if len(liste_bombes) <= 3:
                 matrice[int((yp2 + 20) // 40)][int((xp2 + 20) // 40)] = 3.5
@@ -239,7 +237,7 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
                 liste_bombes.append(bomb_position)
                 liste_bombes_p2.append(bomb_position)  # Track ownership
 
-        # Player 1 bomb placement
+        # Player 1 bomb placement:
         if keyb[K_RSHIFT] and not (special_attack.charging or special_attack.is_active):
             if len(liste_bombes) <= 3:
                 matrice[int((yp + 20) // 40)][int((xp + 20) // 40)] = 3.5
@@ -247,10 +245,7 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
                 liste_bombes.append(bomb_position)
                 liste_bombes_p1.append(bomb_position)  # Track ownership
 
-
-        # gestion des bombes
-        # Bomb management
-        # Bomb management
+        # Bomb management:
         for bombes in liste_bombes:
             bombes[2] -= 1
             if bombes[2] == 150:
@@ -265,7 +260,6 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
                         matrice[bombes[1] - i][bombes[0]] = 4
                         feu.append((bombes[0], bombes[1] - i, int(randint(1, chance_b_f) == 1)))
                         explosion_bombe.play()
-                        # Increment brick counter for the correct player
                         if bombes in liste_bombes_p1:
                             player1_bricks += 1
                         elif bombes in liste_bombes_p2:
@@ -334,16 +328,15 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
                         break
                 liste_f.append(feu)
 
-        # gestion des bonus
+        #bonus management:
         if matrice[int((yp + 20) // 40)][int((xp + 20) // 40)] == 5:
             vitesse1 *= 1.25
             matrice[int((yp + 20) // 40)][int((xp + 20) // 40)] = 0
         if matrice[int((yp2 + 20) // 40)][int((xp2 + 20) // 40)] == 5:
             vitesse2 *= 1.25
             matrice[int((yp2 + 20) // 40)][int((xp2 + 20) // 40)] = 0
-        #
 
-        # gestion des flammes
+        #flames management:
         for feu in liste_f:
             feu[0] -= 1
             if feu[0] == 0:
@@ -351,8 +344,7 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
                     matrice[couple[1]][couple[0]] = couple[2] * 5
                 liste_f.remove(feu)
 
-        # 💣 Gestion des explosions de projectiles spéciaux
-        # In the projectile explosion handling:
+        # projectile explosion handling:
         for explosion in special_attack.update_projectiles(matrice):
             ex, ey, owner = explosion
             feu_entry = [59]
@@ -361,42 +353,40 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
                     cx = int((ex + dx * 40) // 40)
                     cy = int((ey + dy * 40) // 40)
                     if 0 <= cx < 15 and 0 <= cy < 15:
-                        # Only destroy breakable blocks (2) and empty spaces (0)
                         if matrice[cy][cx] in [0, 2]:
                             matrice[cy][cx] = 4
                             feu_entry.append((cx, cy, int(randint(1, chance_b_f) == 1)))
-                            # Count destroyed bricks
 
             liste_f.append(feu_entry)
             explosion_bombe.play()
 
 
 
-        # gestion de la vie:
+        # health management:
         if matrice[int((yp + 20) // 40)][int((xp + 20) // 40)] == 4:  # si le feu est touche
             vie1 -= 1
         if matrice[int((yp2 + 20) // 40)][int((xp2 + 20) // 40)] == 4:
             vie2 -= 1
 
         if vie1 < 1:
-            fin = 0  # fin du jeu
+            fin = 0
         if vie2 < 1:
             fin = -1
 
-        # === Special Attack Unlock ===
+        # Special Attack Unlock:
         if not player1_has_special and player1_bricks >= 5:
             player1_has_special = True
-            player1_bricks = 0  # Reset counter
+            player1_bricks = 0
 
         if not player2_has_special and player2_bricks >= 5:
             player2_has_special = True
-            player2_bricks = 0  # Reset counter
+            player2_bricks = 0
 
 
 
-        # deplacement:
+        # movements:
 
-        # perso 1 movement - Modified with special attack immobilization
+        # perso 1 movement - Modified with special attack immobilization:
         keyb = key.get_pressed()
         player1_can_move = not (
                     special_attack.charging and special_attack.charging_player == 1) and not special_attack.is_active
@@ -422,7 +412,7 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
                     if yp % 40 <= 20 and yp % 40 != 0: yp -= 1
                     if yp % 40 > 20 and yp % 40 != 0: yp += 1
 
-        # perso 2 movement - Modified with special attack immobilization
+        # perso 2 movement - Modified with special attack immobilization:
         player2_can_move = not (
                     special_attack.charging and special_attack.charging_player == 2) and not special_attack.is_active
         if player2_can_move:
@@ -461,8 +451,8 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
                     display.flip()
                     time.wait(100)
 
-            while True:  # affichage et reinitialisation du jeu
-
+            while True:
+                # affichage et reinitialisation du jeu:
                 fenetre.blit(lafin[-fin], (0, 0))
                 display.flip()
                 for evenements in event.get(): pass
@@ -516,12 +506,12 @@ def start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, t
         pygame.display.flip()
 
 
-    # Réinitialisation de la manche
+    # round reinitialisation:
     if manche_terminee:
         start_bomberman(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, tile_size)
         return
 
-    # Vérifie si un joueur a gagné 3 manches
+    # Verify if a player won 3 round:
     if victoires_p1 >= 3:
         winner_text = font.render("Player 1 wins the game!", True, (0, 255, 0))
     else:
