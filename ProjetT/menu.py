@@ -74,7 +74,7 @@ def menu_loop():
         widget_padding=10,
         widget_selection_effect=pygame_menu.widgets.HighlightSelection(),
         widget_alignment=pygame_menu.locals.ALIGN_CENTER,  # Add this to center all widgets
-        title_offset=(0, 10),  # Adjust title vertical position if needed
+        title_offset=(0, 0),  # Adjust title vertical position if needed
         title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY  # Cleaner title bar
     )
 
