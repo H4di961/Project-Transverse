@@ -46,14 +46,14 @@ class SpecialAttackSystem:
         self.is_active = False
 
         # Load images
-        arrow = pygame.image.load("arrow.png").convert_alpha()
+        arrow = pygame.image.load("arrow/arrow.png").convert_alpha()
         self.arrow_img = pygame.transform.scale(arrow, (30, 30))
         bomb = pygame.image.load("bomb/specialbomb.png").convert_alpha()
         self.bomb_img = pygame.transform.scale(bomb, (40, 40))
 
     def handle_event(self, ev, p1_has_special, p2_has_special, p1_x, p1_y, p2_x, p2_y):
         # Start charging for Player 1
-        if (ev.type == KEYDOWN and ev.key == K_LSHIFT
+        if (ev.type == KEYDOWN and ev.key == K_l
                 and p1_has_special and not self.charging and not self.is_active):
             self.charging = True
             self.charging_player = 1
@@ -70,7 +70,7 @@ class SpecialAttackSystem:
 
         # Release charge on second key press
         if self.charging and ev.type == KEYDOWN:
-            if (self.charging_player == 1 and ev.key == K_LSHIFT) or \
+            if (self.charging_player == 1 and ev.key == K_l) or \
                (self.charging_player == 2 and ev.key == K_r):
                 # Determine start position
                 sx, sy = (p1_x + 20, p1_y + 20) if self.charging_player == 1 else (p2_x + 20, p2_y + 20)
