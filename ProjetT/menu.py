@@ -5,7 +5,7 @@ from enums.algorithm import Algorithm
 import os
 
 # --- Config ---
-MENU_BACKGROUND_IMAGE = "background/background_bomberman.PNG"
+MENU_BACKGROUND_IMAGE = "maps/background_bomberman.PNG"
 MENU_FONT = pygame_menu.font.FONT_BEBAS
 BUTTON_COLOR = (255, 255, 255)
 SELECTION_COLOR = (200, 200, 200)
