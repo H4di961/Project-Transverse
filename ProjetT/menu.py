@@ -77,6 +77,7 @@ def menu_loop():
         widget_alignment=pygame_menu.locals.ALIGN_CENTER,  # Add this to center all widgets
         title_offset=(0, 0),  # Adjust title vertical position if needed
         title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_TITLE_ONLY  # Cleaner title bar
+
     )
 
     # --- Menus ---
@@ -99,18 +100,23 @@ def menu_loop():
                          font_color=COLOR_BLACK, background_color=BUTTON_COLOR)
 
     keybinds_menu_theme = menu_theme.copy()
-    keybinds_menu_theme.widget_font_size = int(TILE_SIZE * 0.5)
+    keybinds_menu_theme.widget_font_size = int(TILE_SIZE * 0.4)
+    keybinds_menu_theme.widget_offset = (0.017, 40)
 
     keybinds_menu = pygame_menu.Menu(
         theme=keybinds_menu_theme,
         width=13 * TILE_SIZE,
         height=13 * TILE_SIZE,
         overflow=False,
-        title='Keybinds'
+        title='Keybinds',
+
+
+
     )
     keybinds_menu.add.label("Player 1 Controls:", font_color=COLOR_BLACK)
     keybinds_menu.add.label("Move: Q, Z, D, S", font_color=COLOR_BLACK)
     keybinds_menu.add.label("Plant Bomb: E", font_color=COLOR_BLACK)
+
     keybinds_menu.add.vertical_margin(0.5)
     keybinds_menu.add.label("Player 2 Controls:", font_color=COLOR_BLACK)
     keybinds_menu.add.label("Move: Arrow Keys", font_color=COLOR_BLACK)
@@ -119,8 +125,10 @@ def menu_loop():
     keybinds_menu.add.button('Return  to  main  menu', pygame_menu.events.BACK,
                              font_color=COLOR_BLACK, background_color=BUTTON_COLOR)
 
+
     special_attack_menu_theme = menu_theme.copy()
     special_attack_menu_theme.widget_font_size = int(TILE_SIZE * 0.3)
+    special_attack_menu_theme.widget_offset = (0.017, 40)
 
     special_attack_menu = pygame_menu.Menu(
         theme=special_attack_menu_theme,
