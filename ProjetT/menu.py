@@ -70,6 +70,7 @@ def menu_loop():
         title_font=MENU_FONT,
         widget_font_color=COLOR_BLACK,
         widget_font_size=int(TILE_SIZE * 0.7),
+        widget_offset=(0.025,0.17),
         title_background_color=MENU_TITLE_COLOR,
         widget_padding=10,
         widget_selection_effect=pygame_menu.widgets.HighlightSelection(),
@@ -119,7 +120,7 @@ def menu_loop():
                              font_color=COLOR_BLACK, background_color=BUTTON_COLOR)
 
     special_attack_menu_theme = menu_theme.copy()
-    special_attack_menu_theme.widget_font_size = int(TILE_SIZE * 0.5)
+    special_attack_menu_theme.widget_font_size = int(TILE_SIZE * 0.3)
 
     special_attack_menu = pygame_menu.Menu(
         theme=special_attack_menu_theme,
