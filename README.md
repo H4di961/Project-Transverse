@@ -1,6 +1,6 @@
 # Bomberman Clone - Multiplayer Battle Game
 
-A Python remake of the classic Bomberman game featuring multiplayer battles, AI opponents, and special attacks. Built with Pygame.
+A Python remake of the classic Bomberman game featuring multiplayer battles, and special attacks. Built with Pygame.
 
 ## Features
 
