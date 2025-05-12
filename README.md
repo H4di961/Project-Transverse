@@ -43,7 +43,7 @@ python menu.py
 ### Controls
 | Player 1        | Player 2         | Action          |
 |-----------------|------------------|-----------------|
-| Q, Z, D, S      | Arrow Keys       | Movement        |
+| W, A, S, D      | Arrow Keys       | Movement        |
 | E               | Right Shift      | Plant Bomb      |
 | Movement Keys   | Movement Keys    | Aim Special     |
 
